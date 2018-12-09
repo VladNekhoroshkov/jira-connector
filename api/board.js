@@ -16,6 +16,17 @@ function AgileBoardClient(jiraClient) {
    * @method getAllBoards
    * @memberOf AgileBoardClient#
    * @param opts The request options to send to the Jira API
+   * @param [opts.accountIdLocation]
+   *
+   * <--! тут и далее поши новые добавления   //мб тут надо указывать, где какой тип данных? string/boolean/..? //
+   * @param [opts.userkeyLocation]
+   * @param [opts.usernameLocation]
+   * @param [opts.projectLocation]
+   * @param [opts.includePrivate] Appends private boards to the end of the list. The name and type fields are excluded for security reasons.
+   * @param [opts.negateLocationFiltering] If set to true, negate filters used for querying by location. By default false.
+   * @param [opts.expand] List of fields to expand for each board. Valid values: admins, permissions.
+   * ->>
+   *
    * @param [opts.type] Limits returning boards of a specific type: `scrum` or `kanban`.
    * @param [opts.startAt] The index of the first dashboard to return (0-based). must be 0 or a multiple of
    *     maxResults
@@ -37,11 +48,19 @@ function AgileBoardClient(jiraClient) {
       json: true,
       followAllRedirects: true,
       qs: {
+        accountIdLocation: opts.accountIdLocation,
         type: opts.type,
         startAt: opts.startAt,
         name: opts.name,
         projectKeyOrId: opts.projectKeyOrId,
-        maxResults: opts.maxResults
+        maxResults: opts.maxResults,
+        orderBy: opts.orderBy,
+        userkeyLocation: optd.userkeyLocation,
+        usernameLocation: opts.usernameLocation,
+        projectLocation: opts.projectLocation,
+        includePrivate: opts.includePrivate,
+        negateLocationFiltering: opts.negateLocationFiltering,
+        expand: opts.expand
       }
     };
 
@@ -67,7 +86,8 @@ function AgileBoardClient(jiraClient) {
       qs: {
         filter: opts.filter,
         startAt: opts.startAt,
-        maxResults: opts.maxResults
+        maxResults: opts.maxResults,
+        boardId: opts.boardId
       }
     };
 
@@ -101,7 +121,8 @@ function AgileBoardClient(jiraClient) {
       qs: {
         startAt: opts.startAt,
         maxResults: opts.maxResults,
-        jql: opts.jql
+        jql: opts.jql,
+        boardId: opts.boardId
       }
     };
 
@@ -135,7 +156,8 @@ function AgileBoardClient(jiraClient) {
       qs: {
         startAt: opts.startAt,
         maxResults: opts.maxResults,
-        state: opts.state
+        state: opts.state,
+        boardId: opts.boardId
       }
     };
 
@@ -173,7 +195,8 @@ function AgileBoardClient(jiraClient) {
         maxResults: opts.maxResults,
         jql: opts.jql,
         validateQuery: opts.validateQuery,
-        fields: opts.fields
+        fields: opts.fields,
+        boardId: opts.boardId
       }
     };
 
@@ -206,6 +229,7 @@ function AgileBoardClient(jiraClient) {
       qs: {
         startAt: opts.startAt,
         maxResults: opts.maxResults,
+        boardId: opts.boardId
       }
     };
 
